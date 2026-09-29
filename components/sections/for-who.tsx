@@ -2,21 +2,11 @@
 
 import { motion } from "framer-motion";
 import { Check, X, Baby } from "lucide-react";
-
-const forWho = [
-  "Дитині 10–14 років",
-  "Нуль досвіду в програмуванні",
-  "Цікавиться ґаджетами, іграми, YouTube",
-  "Хоче «зробити щось своє», а не тільки дивитися",
-];
-
-const notForWho = [
-  "Дитина вже впевнено пише HTML/CSS",
-  "Шукаємо серйозний курс з JavaScript чи фреймворків",
-  "Дитині менше 9 років — інший формат буде комфортнішим",
-];
+import { useLanguage } from "@/lib/i18n";
 
 export function ForWho() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20 sm:py-28">
       <div className="container">
@@ -31,10 +21,10 @@ export function ForWho() {
             <Baby className="h-6 w-6" />
           </div>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-            Для кого цей курс
+            {t.forWho.title}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Чесно кажемо, кому підійде, а кому — ні. Економимо ваш час.
+            {t.forWho.subtitle}
           </p>
         </motion.div>
 
@@ -50,10 +40,12 @@ export function ForWho() {
               <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-green-100 text-green-700">
                 <Check className="h-4 w-4" />
               </div>
-              <h3 className="font-display text-xl font-semibold">Підійде, якщо</h3>
+              <h3 className="font-display text-xl font-semibold">
+                {t.forWho.suitableTitle}
+              </h3>
             </div>
             <ul className="space-y-3">
-              {forWho.map((item, i) => (
+              {t.forWho.suitableItems.map((item, i) => (
                 <motion.li
                   key={item}
                   initial={{ opacity: 0, x: -8 }}
@@ -80,10 +72,12 @@ export function ForWho() {
               <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-rose-100 text-rose-700">
                 <X className="h-4 w-4" />
               </div>
-              <h3 className="font-display text-xl font-semibold">Не підійде, якщо</h3>
+              <h3 className="font-display text-xl font-semibold">
+                {t.forWho.notSuitableTitle}
+              </h3>
             </div>
             <ul className="space-y-3">
-              {notForWho.map((item, i) => (
+              {t.forWho.notSuitableItems.map((item, i) => (
                 <motion.li
                   key={item}
                   initial={{ opacity: 0, x: -8 }}

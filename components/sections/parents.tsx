@@ -3,31 +3,13 @@
 import { motion } from "framer-motion";
 import { Shield, Clock, HeartHandshake, GraduationCap } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/lib/i18n";
 
-const benefits = [
-  {
-    icon: Shield,
-    title: "Безпечно",
-    desc: "Закрите середовище, без спілкування з незнайомцями. Підтримка наставника.",
-  },
-  {
-    icon: Clock,
-    title: "15–20 хв на день",
-    desc: "Короткі уроки 7–10 хв. Практика з першої хвилини, без довгих лекцій.",
-  },
-  {
-    icon: HeartHandshake,
-    title: "Підтримка наставника",
-    desc: "Підказки, перевірка проєктів і відповіді на запитання — поруч, не залишимо самих.",
-  },
-  {
-    icon: GraduationCap,
-    title: "Сертифікат",
-    desc: "Після фінального проєкту — «Юний розробник». Доказ для батьків і гордість для дитини.",
-  },
-];
+const icons = [Shield, Clock, HeartHandshake, GraduationCap];
 
 export function Parents() {
+  const { t } = useLanguage();
+
   return (
     <section className="py-20 sm:py-28 bg-gradient-to-b from-secondary/30 to-background">
       <div className="container">
@@ -39,36 +21,39 @@ export function Parents() {
           transition={{ duration: 0.5 }}
         >
           <Badge variant="secondary" className="mb-4">
-            Для батьків
+            {t.parents.badge}
           </Badge>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-            Чому це корисно <span className="text-muted-foreground/80">саме для дитини</span>
+            {t.parents.titlePrefix}
+            <span className="text-muted-foreground/80">{t.parents.titleHighlight}</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Не «чергові уроки з екрану». Це курс, який дає видимий результат, логіку та впевненість
-            у власних силах.
+            {t.parents.subtitle}
           </p>
         </motion.div>
 
         <div className="grid gap-5 sm:grid-cols-2 max-w-4xl mx-auto">
-          {benefits.map((b, i) => (
-            <motion.div
-              key={b.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="flex gap-4 rounded-2xl border bg-card p-6"
-            >
-              <div className="shrink-0 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <b.icon className="h-5 w-5" />
-              </div>
-              <div>
-                <h3 className="font-display text-lg font-semibold">{b.title}</h3>
-                <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
-              </div>
-            </motion.div>
-          ))}
+          {t.parents.benefits.map((b, i) => {
+            const Icon = icons[i] || Shield;
+            return (
+              <motion.div
+                key={b.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="flex gap-4 rounded-2xl border bg-card p-6"
+              >
+                <div className="shrink-0 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-semibold">{b.title}</h3>
+                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{b.desc}</p>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

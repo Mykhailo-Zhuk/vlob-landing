@@ -1,36 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const steps = [
-  {
-    day: "День 1",
-    title: "Знайомство з HTML",
-    desc: "Дитина пише «Привіт, світе!» і бачить його в браузері. Перший маленький тріумф.",
-  },
-  {
-    day: "День 2–3",
-    title: "Сторінка про себе",
-    desc: "Додає заголовки, абзаци, фото та улюблені посилання. Це вже справжня сторінка — про неї.",
-  },
-  {
-    day: "День 4–5",
-    title: "Одягаємо сторінку в CSS",
-    desc: "Кольори, шрифти, рамки. Дитина бачить, як «голі кістки» стають стильним сайтом.",
-  },
-  {
-    day: "День 6",
-    title: "Фінальний проєкт",
-    desc: "Сторінка про улюбленого героя, гру чи хобі. Повністю її — ідея, текст, дизайн.",
-  },
-  {
-    day: "День 7",
-    title: "Деплой і сертифікат",
-    desc: "Викладаємо сайт в інтернет — реальне посилання для друзів. Сертифікат «юний розробник» на пошту.",
-  },
-];
+import { useLanguage } from "@/lib/i18n";
 
 export function HowItWorks() {
+  const { t } = useLanguage();
+
   return (
     <section id="how-it-works" className="py-20 sm:py-28 bg-secondary/30">
       <div className="container">
@@ -42,18 +17,17 @@ export function HowItWorks() {
           transition={{ duration: 0.5 }}
         >
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-            Як проходить курс
+            {t.howItWorks.title}
           </h2>
           <p className="mt-4 text-lg text-muted-foreground">
-            Крок за кроком, день за днем. Без поспіху, без перевантаження — 15–20 хвилин на день
-            достатньо.
+            {t.howItWorks.subtitle}
           </p>
         </motion.div>
 
         <div className="mx-auto max-w-3xl">
           <div className="relative">
             <div className="absolute left-6 sm:left-8 top-3 bottom-3 w-px bg-gradient-to-b from-primary/40 via-accent/40 to-transparent" />
-            {steps.map((step, i) => (
+            {t.howItWorks.steps.map((step, i) => (
               <motion.div
                 key={step.day}
                 initial={{ opacity: 0, x: -16 }}

@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import { LeadForm } from "@/components/lead-form";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles, Send } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export function Cta() {
+  const { t } = useLanguage();
+
   return (
     <section id="lead-form" className="py-20 sm:py-28">
       <div className="container">
@@ -22,15 +25,14 @@ export function Cta() {
           <div className="relative text-center">
             <Badge variant="secondary" className="mb-4">
               <Sparkles className="mr-1.5 h-3.5 w-3.5 text-accent" />
-              Місць у першому потоці — обмежено
+              {t.cta.badge}
             </Badge>
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
-              Запишіть дитину <br className="hidden sm:block" />
-              <span className="gradient-text">на&nbsp;перший потік</span>
+              {t.cta.titlePrefix} <br className="hidden sm:block" />
+              <span className="gradient-text">{t.cta.titleHighlight}</span>
             </h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto">
-              Залиште номер — напишемо в Telegram, розкажемо деталі й допоможемо стартувати.
-              Безкоштовно, без зобов&apos;язань.
+              {t.cta.subtitle}
             </p>
 
             <div className="mt-8">
@@ -39,7 +41,7 @@ export function Cta() {
 
             <p className="mt-5 text-sm text-muted-foreground flex items-center justify-center gap-2">
               <Send className="h-3.5 w-3.5" />
-              Напишемо у Telegram протягом години
+              {t.cta.tgNote}
             </p>
           </div>
         </motion.div>

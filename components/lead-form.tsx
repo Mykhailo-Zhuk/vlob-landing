@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Phone, Mail, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 const schema = z.object({
   phone: z
@@ -59,6 +60,7 @@ interface LeadFormProps {
 
 export function LeadForm({ variant = "section" }: LeadFormProps) {
   const id = useId();
+  const { t } = useLanguage();
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -112,9 +114,11 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
         className="mx-auto max-w-md rounded-2xl border-2 border-green-200 bg-green-50 p-6 text-center"
       >
         <CheckCircle2 className="mx-auto h-12 w-12 text-green-600 mb-3" />
-        <h3 className="font-display text-lg font-semibold text-green-900">Готово!</h3>
+        <h3 className="font-display text-lg font-semibold text-green-900">
+          {t.leadForm.successTitle}
+        </h3>
         <p className="mt-1 text-sm text-green-800">
-          Написали вам у Telegram протягом години. Перевірте повідомлення.
+          {t.leadForm.successDesc}
         </p>
       </motion.div>
     );
@@ -125,48 +129,48 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
       onSubmit={handleSubmit(onSubmit)}
       className={
         variant === "hero"
-          ? "mx-auto max-w-xl rounded-2xl border bg-card/80 backdrop-blur p-4 sm:p-5 shadow-lg"
+          ? "mx-auto w-full max-w-2xl sm:max-w-3xl rounded-2xl border bg-card/80 backdrop-blur p-4 sm:p-5 shadow-lg"
           : "mx-auto max-w-md space-y-4"
       }
       noValidate
     >
       {variant === "hero" ? (
-        <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto]">
-          <div>
+        <div className="grid gap-3 sm:grid-cols-[1fr_1fr_auto] items-start">
+          <div className="min-w-0">
             <Input
               type="tel"
               inputMode="tel"
               autoComplete="tel"
-              placeholder="+380 XX XXX XX XX"
+              placeholder={t.leadForm.phonePlaceholder}
               {...register("phone")}
               onChange={onPhoneChange}
               value={phoneValue}
               disabled={status === "submitting"}
-              className="bg-white"
+              className="bg-white w-full"
               aria-invalid={!!errors.phone}
             />
             {errors.phone && (
-              <p className="mt-1 text-xs text-destructive flex items-center gap-1">
-                <AlertCircle className="h-3 w-3" />
-                {errors.phone.message}
+              <p className="mt-1.5 text-xs text-destructive flex items-center gap-1">
+                <AlertCircle className="h-3 w-3 shrink-0" />
+                <span>{errors.phone.message}</span>
               </p>
             )}
           </div>
-          <div>
+          <div className="min-w-0">
             <Input
               type="email"
               inputMode="email"
               autoComplete="email"
-              placeholder="Email (необов&apos;язково)"
+              placeholder={t.leadForm.emailPlaceholder}
               {...register("email")}
               disabled={status === "submitting"}
-              className="bg-white"
+              className="bg-white w-full"
               aria-invalid={!!errors.email}
             />
             {errors.email && (
-              <p className="mt-1 text-xs text-destructive flex items-center gap-1">
-                <AlertCircle className="h-3 w-3" />
-                {errors.email.message}
+              <p className="mt-1.5 text-xs text-destructive flex items-center gap-1 whitespace-nowrap">
+                <AlertCircle className="h-3 w-3 shrink-0" />
+                <span>{errors.email.message}</span>
               </p>
             )}
           </div>
@@ -175,14 +179,14 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
             size="lg"
             variant="gradient"
             disabled={status === "submitting"}
-            className="h-12 sm:h-12 px-6"
+            className="h-12 sm:h-12 px-5 sm:px-6 shrink-0"
           >
             {status === "submitting" ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>
                 <Phone className="h-4 w-4" />
-                Записатися
+                {t.leadForm.submitHeroButton}
               </>
             )}
           </Button>
@@ -192,7 +196,7 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
           <div className="space-y-1.5">
             <Label htmlFor={`${id}-phone`} className="flex items-center gap-1.5">
               <Phone className="h-3.5 w-3.5" />
-              Номер телефону
+              {t.leadForm.phoneLabel}
               <span className="text-destructive">*</span>
             </Label>
             <Input
@@ -200,7 +204,7 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
               type="tel"
               inputMode="tel"
               autoComplete="tel"
-              placeholder="+380 XX XXX XX XX"
+              placeholder={t.leadForm.phonePlaceholder}
               {...register("phone")}
               onChange={onPhoneChange}
               value={phoneValue}
@@ -216,12 +220,12 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor={`${id}-name`}>Ім&apos;я (необов&apos;язково)</Label>
+            <Label htmlFor={`${id}-name`}>{t.leadForm.nameLabel}</Label>
             <Input
               id={`${id}-name`}
               type="text"
               autoComplete="name"
-              placeholder="Як до вас звертатися?"
+              placeholder={t.leadForm.namePlaceholder}
               {...register("name")}
               disabled={status === "submitting"}
             />
@@ -230,14 +234,14 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
           <details className="rounded-lg border bg-secondary/30 px-3 py-2 group">
             <summary className="text-sm text-muted-foreground cursor-pointer flex items-center gap-1.5 list-none select-none">
               <Mail className="h-3.5 w-3.5" />
-              Додати email (необов&apos;язково)
+              {t.leadForm.emailLabel}
             </summary>
             <div className="mt-2">
               <Input
                 type="email"
                 inputMode="email"
                 autoComplete="email"
-                placeholder="email@example.com"
+                placeholder={t.leadForm.emailPlaceholder}
                 {...register("email")}
                 disabled={status === "submitting"}
                 aria-invalid={!!errors.email}
@@ -261,12 +265,12 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
             {status === "submitting" ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Надсилаємо...
+                {t.leadForm.submitting}
               </>
             ) : (
               <>
                 <Phone className="h-4 w-4" />
-                Записатися на міні-курс
+                {t.leadForm.submitButton}
               </>
             )}
           </Button>

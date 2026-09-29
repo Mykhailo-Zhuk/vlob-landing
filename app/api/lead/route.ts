@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
     "",
     `📞 *Телефон:* ${escapeMarkdown(phoneFormatted)}`,
   ];
-  if (name) lines.push(`👤 *Ім&apos;я:* ${escapeMarkdown(name)}`);
+  if (name) lines.push(`👤 *Ім'я:* ${escapeMarkdown(name)}`);
   if (email) lines.push(`📧 *Email:* ${escapeMarkdown(email)}`);
   lines.push("");
   lines.push(`🕐 ${new Date().toLocaleString("uk-UA", { timeZone: "Europe/Kyiv" })}`);

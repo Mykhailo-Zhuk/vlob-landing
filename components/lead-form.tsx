@@ -2,7 +2,7 @@
 
 import { useState, useId } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -66,7 +66,7 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
     register,
     handleSubmit,
     setValue,
-    watch,
+    control,
     reset,
     formState: { errors },
   } = useForm<FormData>({
@@ -74,7 +74,7 @@ export function LeadForm({ variant = "section" }: LeadFormProps) {
     mode: "onTouched",
   });
 
-  const phoneValue = watch("phone") || "";
+  const phoneValue = useWatch({ control, name: "phone" }) || "";
 
   const onPhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatted = formatPhone(e.target.value);
